@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
-import BasicButton from './BasicButton';
-import LoginSignUpBtn from './LoginSignUpBtn';
+import BasicButton from "./BasicButton";
+import LoginSignUpBtn from "./LoginSignUpBtn";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    function handleLoginBtnClick()
-    {console.log("Login Clicked")}
-    function handleSignUpBtnClick(){
-        console.log("SignUp Clicked")
+
+     //function to handle when login btn is clicked on
+     function handleLoginBtnClick() {
+        console.log("login clicked", email, password);
+    }
+
+
+    //function to handle when signup btn is clicked on
+    function handleSignUpBtnClick() {
+        console.log("signup clicked");
     }
 
     //component rendering
@@ -35,8 +41,17 @@ export default function Login() {
                     onChangeText={(val) => setPassword(val)}
                 />
               </View>
-              <BasicButton text="Login" onPress={handleLoginBtnClick}></BasicButton>
-              <LoginSignUpBtn customStyle={styles.signup} text="Don't Have An Account?" btnText="Signup" onPress={handleSignUpBtnClick}></LoginSignUpBtn>
+              <BasicButton
+                text="Login"
+                onPress={handleLoginBtnClick}
+              />
+
+             <LoginSignUpBtn
+                customStyle={styles.signup}
+                text="Don’t have an account?"
+                btnText="Sign up"
+                onPress={handleSignUpBtnClick}
+              />      
         </ScrollView>
     );
 }
