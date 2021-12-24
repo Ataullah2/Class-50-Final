@@ -2,11 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './components/Login'
 import SignUp from './components/SignUp';
+import {NavigationContainer} from '@react-navigation/native' 
+import StackNavigation from './components/StackNavigation';
 export default function App() {
   return (
-    <View style={styles.container}>
-      <SignUp/>    
-    </View>
+    <NavigationContainer>
+      <StackNavigation/>
+    </NavigationContainer>
+
+  
   );
 }
 

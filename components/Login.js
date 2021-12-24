@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import BasicButton from "./BasicButton";
 import LoginSignUpBtn from "./LoginSignUpBtn";
 
-export default function Login() {
+export default function Login({navigation}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,6 +15,7 @@ export default function Login() {
 
     //function to handle when signup btn is clicked on
     function handleSignUpBtnClick() {
+        navigation.navigate('SignUp')
         console.log("signup clicked");
     }
 

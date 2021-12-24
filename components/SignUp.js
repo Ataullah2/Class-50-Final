@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 import BasicButton from './BasicButton';
 import LoginSignUpBtn from './LoginSignUpBtn';
 import { Picker } from '@react-native-picker/picker';
@@ -17,6 +17,7 @@ export default class SignUp extends ValidationComponent {
       ageGroup: '',
       password: '',
       confirmPassword: '',
+      isLoading: false,
       snackBarVisible: false,
       snackBarType: "",
       snackBarText: "",
@@ -29,7 +30,9 @@ export default class SignUp extends ValidationComponent {
         await soundObject.loadAsync(require('../assets/ding2.mp3'));
         await soundObject.playAsync();
 
-       
+        // Don't forget to unload the sound from memory
+        // when you are done using the Sound object
+        // await soundObject.unloadAsync();
     } catch (error) {
         // An error occurred!
     }
@@ -37,6 +40,8 @@ export default class SignUp extends ValidationComponent {
 
   //function to handle when signup btn is clicked on
   handleRegisterBtnClick = () => {
+    this.displayLoader();
+
     //validating fields using 3rd party library
     this.validate({
       name: { minlength: 3, maxlength: 25, required: true },
@@ -55,6 +60,10 @@ export default class SignUp extends ValidationComponent {
           this.playAudio();
           this.displaySnackBar("success", "Login Clicked!");
       }
+      setTimeout(()=>{
+        this.hideLoader();
+      },1000);
+      
 
   };
 
@@ -76,10 +85,26 @@ hideSnackBar = () => {
   });
 }
  
+  //function to toogle loading bar
+  displayLoader = () => {
+    console.log("diaplyed loader");
+    this.setState({
+        isLoading: true,
+    });
+}
+
+hideLoader = () => {
+    console.log("hidden loader");
+    this.setState({
+        isLoading: false,
+    });
+}
+
 
   //function to handle when sign in btn is clicked on
   handleSignInBtnClick() {
     console.log('sign in clicked');
+    this.props.navigation.navigate('Login');
   }
 
   //component rendering
@@ -87,7 +112,7 @@ hideSnackBar = () => {
     return (
       <>
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>Signup</Text>
+        <Text style={styles.title}>SignUp</Text>
 
         <View style={styles.form}>
           <Text style={styles.label}>Name</Text>
@@ -150,6 +175,12 @@ hideSnackBar = () => {
 
         
         <ORDivider />
+        {
+                        this.state.isLoading ?
+                            <ActivityIndicator style={styles.loader} />
+                            : null
+                    }
+
         <LoginSignUpBtn
           customStyle={styles.signin}
           text="Already have an account?"
